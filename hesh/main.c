@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <zconf.h>
+#include <memory.h>
 #include "hesh.h"
 #include "hesh_logger.h"
 
@@ -37,9 +38,13 @@ int hesh_loop() {
     do {
         printf(HESH_LINE, getcwd(cwd_buffer, HESH_LINE_BUFF_SIZE));
         line = hesh_read_line();
-        args = hesh_parse_line(line);
-        status = hesh_execute_line(args, line);
-
+        {
+            char * linecpy = malloc(sizeof(line));
+            strcpy(linecpy,line);
+            args = hesh_parse_line(line);
+            status = hesh_execute_line(args, linecpy);
+            free(linecpy);
+        }
         free(line);
         free(args);
     } while (status);
