@@ -17,8 +17,6 @@ char **hesh_parse_line(char *line);
 
 char *hesh_read_line();
 
-void exit_buffer_alloc(char *argument);
-
 int hesh_execute_line(char **tokens);
 
 

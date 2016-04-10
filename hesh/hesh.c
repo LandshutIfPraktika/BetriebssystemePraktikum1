@@ -5,15 +5,37 @@
 #include <malloc.h>
 #include <memory.h>
 #include <stdlib.h>
+#include <zconf.h>
+#include <wait.h>
 #include "hesh.h"
 
+#define HESH_CD_STRING "cd"
+
+void exit_buffer_alloc(char *argument);
 
 int hesh_execute_line(char **tokens) {
     char *token;
     int pos = 0;
-    while ((token = *(tokens + pos++)) != NULL) {
+    if ((token = *(tokens + pos++)) != NULL) {
         if (!strcmp(HESH_EXIT_STRING, token)) {
             return 0;
+        } else if (!strcmp(HESH_CD_STRING, token)) {
+            if (chdir(*(tokens + pos))) {
+                perror("could not change directory");
+            };
+        } else {
+            pid_t pid;
+            pid = fork();
+
+            if (pid == 0) {
+                execvp(token, tokens);
+                perror("execution");
+                exit(EXIT_FAILURE);
+            } else {
+                int return_status;
+                waitpid(pid, &return_status, 0);
+            }
+
         }
     }
     return 1;
@@ -51,7 +73,7 @@ char **hesh_parse_line(char *line) {
 char *hesh_read_line() {
     int buff_size = HESH_LINE_BUFF_SIZE;
     char *buffer;
-    char c;
+    int c;
     int pos = 0;
 
 
@@ -67,7 +89,7 @@ char *hesh_read_line() {
             *(buffer + pos) = '\0';
             return buffer;
         } else {
-            *(buffer + pos++) = c;
+            *(buffer + pos++) = (char) c;
         }
 
         if (pos >= buff_size) {
