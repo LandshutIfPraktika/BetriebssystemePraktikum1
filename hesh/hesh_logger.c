@@ -7,8 +7,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <memory.h>
 #include <errno.h>
+#include <sys/time.h>
 #include "hesh.h"
 
 void exit_time();
@@ -35,10 +35,15 @@ int logger_log_line(char *line) {
 char *time_string(char *buffer) {
     time_t current_time;
     struct tm *time_struct;
+    struct timeval timeval1_struct;
+
     current_time = time(NULL);
     if (current_time == -1) {
         exit_time();
     }
+
+    gettimeofday(&timeval1_struct, NULL);
+
     time_struct = localtime(&current_time);
     if (time_struct == NULL) {
         exit_time_parse();
@@ -46,7 +51,7 @@ char *time_string(char *buffer) {
 
     sprintf(buffer, "%d-%02d-%02d--%02d:%02d:%02d:%04d", time_struct->tm_year + 1900, time_struct->tm_mon,
             time_struct->tm_mday, time_struct->tm_hour, time_struct->tm_min, time_struct->tm_sec,
-            clock() / (CLOCKS_PER_SEC / 1000));
+            (timeval1_struct.tv_usec / 100));
     return buffer;
 }
 
