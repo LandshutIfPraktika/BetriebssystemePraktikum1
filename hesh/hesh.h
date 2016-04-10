@@ -17,7 +17,7 @@ char **hesh_parse_line(char *line);
 
 char *hesh_read_line();
 
-int hesh_execute_line(char **tokens);
+int hesh_execute_line(char **tokens, char *line);
 
 
 #endif //HESH_HESH_H

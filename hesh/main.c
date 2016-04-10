@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <zconf.h>
 #include "hesh.h"
+#include "hesh_logger.h"
 
 #define HESH_LINE "hesh %s > "
 
@@ -14,9 +15,10 @@ int hesh_loop();
 int main(int arc, char **argv) {
     int return_value;
 
+    logger_start();
     return_value = hesh_loop();
 
-
+    logger_stop();
     return return_value;
 }
 
@@ -36,7 +38,7 @@ int hesh_loop() {
         printf(HESH_LINE, getcwd(cwd_buffer, HESH_LINE_BUFF_SIZE));
         line = hesh_read_line();
         args = hesh_parse_line(line);
-        status = hesh_execute_line(args);
+        status = hesh_execute_line(args, line);
 
         free(line);
         free(args);

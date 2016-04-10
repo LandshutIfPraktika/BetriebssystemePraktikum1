@@ -2,10 +2,12 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/hesh.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/hesh.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/main.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/main.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hesh_logger.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hesh.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hesh_logger.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hesh.c" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

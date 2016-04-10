@@ -8,14 +8,16 @@
 #include <zconf.h>
 #include <wait.h>
 #include "hesh.h"
+#include "hesh_logger.h"
 
 #define HESH_CD_STRING "cd"
 
 void exit_buffer_alloc(char *argument);
 
-int hesh_execute_line(char **tokens) {
+int hesh_execute_line(char **tokens, char *line) {
     char *token;
     int pos = 0;
+    int return_status;
     if ((token = *(tokens + pos++)) != NULL) {
         if (!strcmp(HESH_EXIT_STRING, token)) {
             return 0;
@@ -30,13 +32,16 @@ int hesh_execute_line(char **tokens) {
             if (pid == 0) {
                 execvp(token, tokens);
                 perror("execution");
+                logger_log_line(line);
                 exit(EXIT_FAILURE);
             } else {
-                int return_status;
                 waitpid(pid, &return_status, 0);
             }
 
         }
+    }
+    if(!return_status) {
+        logger_log_line(line);
     }
     return 1;
 }
