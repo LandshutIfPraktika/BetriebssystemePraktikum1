@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;hesh-go&gt;">
+    <CLASSES>
+      <root url="file://$USER_HOME$/golang/src/github.com" />
+      <root url="file://$USER_HOME$/golang/src/golang.org" />
+      <root url="file://$USER_HOME$/golang/src/9fans.net" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
