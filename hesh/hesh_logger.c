@@ -106,9 +106,9 @@ int logger_start() {
 
 void logger_session_start() {
     int i;
-    char *stars = "**********";
-    char *empty = "     ";
-    char *hesh = "*H*E*S*H*";
+    const char *stars = "**********";
+    const char *empty = "     ";
+    const char *hesh = "*H*E*S*H*";
     for (i = 0; i < 8; i++) {
         fprintf(log_file, stars);
     }
