@@ -24,10 +24,13 @@ int hesh_execute_line(char **tokens, char *line) {
         } else if (!strcmp(HESH_CD_STRING, token)) {
             if (chdir(*(tokens + pos))) {
                 perror("could not change directory");
+                exit(EXIT_FAILURE);
             };
         } else {
             pid_t pid;
-            pid = fork();
+            if ((pid = fork()) == 1) {
+                perror("forking");
+            }
 
             if (pid == 0) {
                 execvp(token, tokens);
@@ -40,7 +43,7 @@ int hesh_execute_line(char **tokens, char *line) {
 
         }
     }
-    if(!return_status) {
+    if (!return_status) {
         logger_log_line(line);
     }
     return 1;
